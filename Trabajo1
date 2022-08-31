@@ -8,6 +8,7 @@
 #include <time.h>
 #include <map>
 #include <unordered_map>
+#include <fstream>
 using namespace std;
 template <typename V,typename R>
 R DistanciaEuclediana(vector<V> a,vector<V> b)
@@ -56,7 +57,16 @@ void VectordeVectores(V tam,V dimension)
     {
         cout<<i.first<<": "<<i.second<<endl;
     }
-    
+    fstream excel;
+    excel.open("/Users/lucho/Desktop/Trabajo1.csv",ios::out | ios::app);
+    for (auto i:m)
+    {
+        excel<< i.first<<"\n";
+    }
+    for (auto i:m)
+    {
+        excel<< i.second<<"\n";
+    }
 }
 int main() {
     srand((unsigned int)time(NULL));
