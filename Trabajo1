@@ -1,0 +1,68 @@
+#include <iostream>
+#include <cmath>
+#include <vector>
+#include <algorithm>
+#include <cstdlib>
+#include <functional>
+#include <iterator>
+#include <time.h>
+#include <map>
+#include <unordered_map>
+using namespace std;
+template <typename V,typename R>
+R DistanciaEuclediana(vector<V> a,vector<V> b)
+{
+  R f=0;
+  for(int i=0;i<a.size();i++)
+    {
+      f = f+pow((a[i]-b[i]),2);
+    }
+  f = sqrt(f);
+    f = trunc(f*10)/10;
+  return f;
+}
+int random1()
+{
+  int i = 0;
+  i = 1 + rand() % 1000;
+  return i;
+}
+template <typename V,typename R>
+void VectordeVectores(V tam,V dimension)
+{
+    vector<vector<V>> VectorVectores(tam,vector<V>(dimension));
+    vector<R> Distancia(tam-1);
+    R n;
+    map<R,V> m;
+    //rellenar vectorvectores
+    for(int i=0;i<tam;i++)
+    {
+        generate(VectorVectores[i].begin(),VectorVectores[i].end(),random1);
+    }
+    //obtener distancia
+    for (int i=1;i<tam;i++)
+    {
+        n = DistanciaEuclediana<V,R>(VectorVectores[0],VectorVectores[i]);
+        Distancia.push_back(n);
+    }
+    for (R i : Distancia)
+    {
+        if (i != 0)
+        {
+            m[i]++;
+        }
+    }
+    for (auto i : m)
+    {
+        cout<<i.first<<": "<<i.second<<endl;
+    }
+    
+}
+int main() {
+    srand((unsigned int)time(NULL));
+    const int size1 = 10000;
+    const int size = 10;
+    VectordeVectores<int,float>(size1,size);
+    return 0;
+}
+
