@@ -1,0 +1,81 @@
+//
+//  main.cpp
+//  EdaTrabajo2
+//
+//  Created by Lucho on 9/2/22.
+//
+#include <iostream>
+#include <vector>
+using namespace std;
+//iterativo->hecho
+int fibonacci(int x)
+{
+  int arr[x];
+  arr[0] = 0; arr[1] = 1;
+  for(int i=2;i<=x;i++)
+  {
+      arr[i] = arr[i-1]+arr[i-2];
+  }
+  return arr[x];
+}
+//recursivo->hecho
+int fibonacci2(int x)
+{
+  if(x==0)return 0;
+  if(x==1)return 1;
+  return fibonacci2(x-1)+fibonacci2(x-2);
+}
+void imprimir(vector<vector<int>> fibo)
+{
+    for (int i = 0;i<fibo.size();i++)
+    {
+        for (int j=0;j<fibo[i].size();j++)
+        {
+            cout<<fibo[i][j]<<" ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+}
+vector<vector<int>> multiplicacion(vector<vector<int>> &a,vector<vector<int>> &b)
+{
+    vector<vector<int>> c(a.size(),vector<int>(b[0].size()));
+    for (int i=0;i<a.size();i++)
+    {
+        for (int j=0;j<b[i].size();j++)
+        {
+            for(int k=0;k<a[i].size();k++)
+            {
+                c[i][j] += a[i][k]*b[k][j];
+            }
+        }
+    }
+    return c;
+}
+vector<vector<int>> exponenciacionRapida(vector<vector<int>> fibo,vector<vector<int>> iden,int cont)
+{
+    while (cont > 0)
+    {
+        if(cont%2)
+        {
+            iden = multiplicacion(iden,fibo);
+        }
+        fibo = multiplicacion(fibo,fibo);
+        cont /=2;
+    }
+    return iden;
+}
+//fibonacci logaritmico->hecho
+int fibonacci3(int x)
+{
+    vector<vector<int>> f = {{1,1},{1,0}};
+    vector<vector<int>> iden = {{1,0},{0,1}};
+    return exponenciacionRapida(f,iden,x)[1][0];
+}
+int main()
+{
+    cout<<fibonacci(10)<<endl;
+    cout<<fibonacci2(10)<<endl;
+    cout<<fibonacci3(10)<<endl;
+    return 0;
+}
